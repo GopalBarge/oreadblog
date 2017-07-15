@@ -8,7 +8,7 @@ final class Config
     // Database info (oread_newdb)
     const
     DB_HOST = 'localhost',
-    DB_NAME = 'oread_newdb',
+    DB_NAME = 'knowl1tn_oread_blog',
     DB_USR = 'root',
     DB_PWD = 'vertrigo',
 
