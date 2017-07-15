@@ -1,0 +1,227 @@
+/*o'read css style*/
+
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400';
+
+@import url('https://fonts.googleapis.com/css?family=Arbutus+Slab&subset=latin-ext');
+
+
+/*@import url(font-awesome-4.7.0/css/font-awesome.min.css);*/
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+
+body{
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #FFFFFF;
+}
+
+.container {
+	width: 100%;
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+header{
+	text-align:center;
+	z-index:500;
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	margin: 0;
+	padding: 0;
+	background:#FFF;
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+
+/*search*/
+
+
+/**, *:before, *:after {
+  box-sizing: border-box;
+}*/
+
+label {
+  display: inline-block;
+  margin: 10px 20px;
+  position: relative;
+}
+
+#search{
+  display: block;
+  width: 750px;
+  height: 40px;
+  border:none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  margin-left: 20px;
+  padding: 0px 20px;
+  color: #333;
+  background: #EDEDED;
+  
+}
+#search:active, #search:focus {
+  outline: 0;
+}
+
+#search::-webkit-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search: :-ms-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/*search*/
+
+
+
+
+.logo{
+	margin: 0px 0px;
+	float:left;
+}
+/*search*/
+
+
+.user-btn{
+	float:right;
+	color: #ccc;
+	margin: 16px 18px;
+    text-decoration: none;
+    font-size: 2em;
+	cursor: pointer;
+}
+
+
+/* Style the list */
+
+nav{width: 100%; margin: 60px auto; position:fixed;}
+
+nav ul {
+	background: #FFF;
+	height: 50px;
+	text-align:center;
+    list-style-type: none;
+	font-family: 'Roboto', sans-serif;
+    margin: 0px auto;
+    padding: 0;
+    overflow: hidden;
+	border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Float the list items side by side */
+nav ul li {display: inline-block; list-style:none;}
+
+/* Style the links inside the list items */
+nav ul li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+	margin: 14px 24px;
+    padding: 3px 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: .9em;
+	letter-spacing:0.05em;
+	text-transform:uppercase;
+}
+
+/* Change background color of links on hover */
+nav ul li a:hover {border-bottom: 1px solid rgba(0,0,0,1);}
+
+/* Create an active/current tablink class */
+nav ulli a:focus, .active {border-bottom: 1px solid rgba(0,0,0,1);}
+
+
+section{
+    top: 100px;
+    position: relative; 
+}
+
+
+/*content*/
+
+.tabcontent {
+    width: 80%;
+	margin:0 auto;
+	text-align:center;
+}
+
+
+.tabcontent h2{
+	margin: 0px auto;
+	font-weight: 400;
+}
+
+
+#category-container{
+	margin: 20px auto;
+	width: 100%;
+	text-align: left;
+	padding: 12px 18px;
+}
+
+#category-container li{
+	list-style: none;
+	display: inline-block;
+	margin: 20px 14px;
+}
+
+#category-container a{
+	color: #333;
+	text-decoration: none;
+	font-size: .95em;
+	width: auto;
+	height: 22px;
+	padding: 6px;
+	text-align: left;
+	border: 1px solid rgba(0,0,0,0.5);
+}
+
+#category-container a:hover, active, focus{
+	color: #FFF;
+	background: #FF2125;
+	border: 1px solid #FF2125;
+}
+/*content*/
+
+
+footer{
+	width: 100%;
+	height: 50px;
+	background: #0099CC;
+	color: #FFF;
+	text-align: center;
+	bottom:0;
+	position:fixed;
+	line-height: 1.5em;
+}
+
+footer p{
+	font-size: 1em;
+}

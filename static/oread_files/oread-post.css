@@ -1,0 +1,403 @@
+/*o'read css style*/
+
+@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400';
+
+@import url('https://fonts.googleapis.com/css?family=Arbutus+Slab&subset=latin-ext');
+
+
+/*@import url(font-awesome-4.7.0/css/font-awesome.min.css);*/
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+
+body{
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+	background:#F9F9F9;
+}
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+}
+
+header{
+	text-align:center;
+	z-index:500;
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	margin: 0;
+	padding: 0;
+	background:#FFF;
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+
+.logo{
+	margin: 0px 0px;
+	float:left;
+}
+
+/*search*/
+
+
+/**, *:before, *:after {
+  box-sizing: border-box;
+}*/
+
+label {
+  display: inline-block;
+  margin: 10px 40px;
+  position: relative;
+}
+
+#search{
+  display: block;
+  width: 750px;
+  height: 40px;
+  border:none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  margin-left: 20px;
+  padding: 0px 20px;
+  color: #333;
+  background: #EDEDED;
+  
+}
+#search:active, #search:focus {
+  outline: 0;
+}
+
+#search::-webkit-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search: :-ms-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#search::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/*search*/
+
+
+/* Dropdown Button */
+
+.dropdown {
+    position: relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.drop-list {
+    display: none;
+	float: right;
+    background: #FFF;
+    min-width: 300px;
+	height: 400px;
+	overflow: hidden;
+	margin: 0px 10px;
+	border: 1px solid #000;
+	text-align: left;
+}
+
+.drop-list li {
+    list-style: none;
+	float: left;
+}
+
+.drop-list h2 {
+    text-align: center;
+	font-weight: 400;
+	font-size: 1em;
+	text-transform: uppercase;
+}
+
+.drop-list a {
+    color: black;
+    text-decoration: none;
+	font-size: .9em;
+}
+
+/* Change color of dropdown links on hover */
+.drop-list a:hover {background-color: none; border: none;}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+
+/* Dropdown Button */
+
+
+/* Style the list */
+
+nav{width: 20%; float:right; margin: 4px 0px;}
+
+nav ul {
+	text-align:center;
+    list-style-type: none;
+	font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Float the list items side by side */
+nav ul li {display: inline-block; list-style:none;}
+
+/* Style the links inside the list items */
+nav ul li a {
+    display: inline-block;
+    color: #ccc;
+	margin: 20px 18px;
+    text-decoration: none;
+    font-size: 1.3em;
+	cursor: pointer;
+}
+
+section{
+    top: 80px;
+    position: relative; 
+	
+}
+
+
+/*content*/
+
+
+.content {
+    width: 50%;
+	height: auto;
+	margin: 0px auto 20px;
+	padding: 30px;
+	text-align: left;
+	background:#FFF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.content a {
+	text-decoration: none;
+}
+
+
+.user-info img{
+	width: 7%;
+	border: 0;
+	border-radius: 50%;
+	outline: 0;
+	float: left;
+    display: block;
+}
+
+.user-info p{
+	color: #333;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	margin: 0px 60px;
+	padding: 3px;
+}
+
+.user-info span{
+	display: block;
+	color: #aaa;
+	font-size: .6em;
+	margin: 0px 0px;
+}
+
+
+.category-info{
+	margin: 20px 0px;
+}
+
+#category{
+	width: auto;
+	height: 10px;
+	background: #FF2125;
+	color: #FFF;
+	font-size: .9em;
+	top: 20px;
+	padding: 5px;
+}
+
+.post-content h2{
+	font-size: 1.5em;
+	line-height: 1.4em;
+	font-weight: 400;
+	color: #333;
+}
+
+ 
+.post-content img {
+		display: block;
+        max-width: 100%;
+		margin: 0px auto;
+    }
+
+
+.post-content img[src=""] {
+    display: none;
+}
+
+
+
+.post-content p{
+	font-size: 1.03em;
+	font-family: 'Roboto', sans-serif;
+	line-height:1.7;
+	text-align: justify;
+	font-weight: 400;
+	color: #000;
+}
+
+.social-icon{
+	height:30px;
+	margin:0px -20px;
+}
+
+
+.social-icon a{
+	color: #aaa;
+	font-size: .8em;
+	margin: 0px 0px;
+	padding-left: 22px;
+	text-decoration:none;
+}
+
+.social-icon a{
+	color: #cbcbcb;
+}
+
+.fa {
+  padding-right: 5px;
+}
+
+.social-icon a .fa:active {
+  color:#F00;
+}
+
+/*comments*/
+
+
+#comment-box{
+	display: block;
+	float: left;
+	  width: 80%;
+	  height: 12px;
+	  margin: 10px auto;
+	  border:none;
+	  border-radius: 5px;
+	  font-size: 1em;
+	  font-weight: 300;
+	  font-family: 'Roboto', sans-serif;
+	  padding: 15px;
+	  color: #333;
+	  background: #EDEDED;
+}
+
+#comment-box:active, #search:focus {
+  outline: 0;
+}
+
+.post-comment{
+	text-align: center;
+	width:84px;
+	height: 41px;
+	background: #3e9cbf;
+	margin: 10px 10px;
+	border:none;
+	cursor:pointer;
+	font-size: 1em;
+	font-family: 'Roboto', sans-serif;
+	letter-spacing:.01em;
+	color: #fff;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.post-comment:hover, focus {
+	background:#c5c5c5;
+}
+
+
+.comments{
+	width: 50%;
+	height: auto;
+	margin: 0px auto 20px;
+	padding: 30px;
+	text-align: left;
+	background:#FFF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.comments a{
+	text-decoration: none;
+}
+
+.comments li{
+	list-style: none;
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	padding: 5px;
+	margin: 10px 0px;
+}
+
+.comments li img{
+	width: 7%;
+	border: 0;
+	border-radius: 50%;
+	outline: 0;
+	float: left;
+    display: block;
+}
+
+.comments li p{
+	color: #333;
+	font-size: 1em;
+	line-height: 1.2em;
+	margin: 0px 50px;
+	padding: 6px;
+}
+
+.comments li span{
+	display: block;
+	color: #aaa;
+	font-size: .7em;
+	margin: 0px 0px;
+}
+
+#comment{
+	margin: 0px;
+	font-size: .9em;
+	
+}
+
+/*comments*/
+
+
+/*content*/
