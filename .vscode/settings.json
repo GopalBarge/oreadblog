@@ -1,0 +1,17 @@
+{
+    "files.autoSave": "afterDelay",
+   // Controls the font size in pixels.
+  "editor.fontSize": 18,
+  
+    // Configures if the built-in PHP language suggestions are enabled. The support suggests PHP globals and variables.
+  "php.suggest.basic": true,
+
+  // Enable/disable built-in PHP validation.
+  "php.validate.enable": true,
+
+  // Points to the PHP executable.
+  "php.validate.executablePath": "C:/Program Files/VertrigoServ/Php/php.exe",
+
+  // Whether the linter is run on save or on type.
+  "php.validate.run": "onSave"
+}

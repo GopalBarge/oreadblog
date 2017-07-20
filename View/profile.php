@@ -53,9 +53,9 @@
        <p>@<?=$this->oProfileData->user_login?></p>
 
        <ul class="tab">
-        <li><a ><span><?=$this->oProfileData->topics?></span>Topics</a></li>
-        <li><a ><span><?=$this->oProfileData->followers?></span>Followers</a></li>
-        <li><a ><span><?=$this->oProfileData->following?></span>Following</a></li>
+        <li><a href='#post'><span><?=$this->oProfileData->topics?></span>Topics</a></li>
+        <li><a href='#followers' ><span><?=$this->oProfileData->followers?></span>Followers</a></li>
+        <li><a href='#following' ><span><?=$this->oProfileData->following?></span>Following</a></li>
       </ul> 
 
     </div>
@@ -74,10 +74,72 @@
 
      <?php foreach ($this->oPosts as $oPost):     
 
-     require 'inc/post_summary.php'; 
+      require 'inc/post_summary.php'; 
      endforeach ?>  
    </ul>
    <!--tab containger--></div>
+    <div id="followers" class="tabcontent">
+							
+                            <ul id="follower-container">
+                            	
+                                <li>
+                                	  <div class="follower-info">
+                                      
+                                      	<a href="#" class="follower-img"><img src="oread_files/tom.jpg" class="avatar"/></a>
+                               			<a href="#" id="follower"><p>Tom Cruise <span id="post-time">@tom_cruise01</span></p></a>
+                                     </div>
+                                      
+                                      
+                                      <a href="#" class="follow-btn-link"><div class="follow-btn">Follow</div></a>
+                                    <div id="extra"></div>
+                                	
+                                </li>
+                                <li>
+                                	  <div class="follower-info">
+                                      
+                                      	<a href="#" class="follower-img"><img src="oread_files/robert01.jpg" class="avatar"/></a>
+                               			<a href="#" id="follower"><p>Robert Downey Jr. <span id="post-time">@robert_downey</span></p></a>
+                                     </div>
+                                      
+                                      
+                                      <a href="#" class="follow-btn-link"><div class="follow-btn">Follow</div></a>
+                                    <div id="extra"></div>
+                                	
+                                </li>
+                                
+   <!--follower container--></ul>
+              </div>
+              <div id="following" class="tabcontent">
+							 <ul id="follower-container">
+                             
+                             <li>
+                                	  <div class="follower-info">
+                                      
+                                      	<a href="#" class="follower-img"><img src="oread_files/downey.jpg" class="avatar"/></a>
+                               			<a href="#" id="follower"><p>Robert Downey Jr. <span id="post-time">@robert_downey</span></p></a>
+                                     </div>
+                                      
+                                      
+                                      <a href="#" class="follow-btn-link"><div class="unfollow-btn">Unfollowing</div></a>
+                                    <div id="unextra"></div>
+                                	
+                                </li>
+                                <li>
+                                	  <div class="follower-info">
+                                      
+                                      	<a href="#" class="follower-img"><img src="oread_files/tom.jpg" class="avatar"/></a>
+                               			<a href="#" id="follower"><p>Tom Cruise <span id="post-time">@tom_cruise01</span></p></a>
+                                     </div>
+                                      
+                                      
+                                      <a href="#" class="follow-btn-link"><div class="unfollow-btn">Unfollowing</div></a>
+                                    <div id="unextra"></div>
+                                	
+                                </li>
+                                
+                                
+   <!--following container--></ul>
+      				</div>
 
 
 
@@ -91,12 +153,120 @@
     <?php } 
     ?>
 
-<!--All scripts here-->
+ <script>
+                    
+						$('.follower-img').each(function(){
+							var imageWidth = $(this).find('img').width();
+							var imageheight = $(this).find('img'). height();
+							if(imageWidth > imageheight){
+								$(this).addClass('landscape');
+							}else{
+								$(this).addClass('potrait');
+						   }
+						})
+                    
+</script>
 
-
-
-<!--tabs script--> 
-
+<script>
+						$('ul.tab').each(function(){
+              
+						  // For each set of tabs, we want to keep track of
+						  // which tab is active and its associated content
+						  var $active, $content, $links = $(this).find('a');
+						
+						  // If the location.hash matches one of the links, use that as the active tab.
+						  // If no match is found, use the first link as the initial active tab.
+						  $active = $($links.filter('[href="'+location.hash+'"]')[0] || $links[0]);
+						  $active.addClass('active');
+						
+						  $content = $($active[0].hash);
+						
+						  // Hide the remaining content
+						  $links.not($active).each(function () {
+							$(this.hash).hide();
+						  });
+						
+						  // Bind the click event handler
+						  $(this).on('click', 'a', function(e){
+							// Make the old tab inactive.
+							$active.removeClass('active');
+							$content.hide();
+						
+							// Update the variables with the new link and content
+							$active = $(this);
+							$content = $(this.hash);
+						
+							// Make the tab active.
+							$active.addClass('active');
+							$content.show();
+						
+							// Prevent the anchor's default click action
+							e.preventDefault();
+						  });
+						});
+        
+        
+</script>
+<script>
+                                	$('.follow-btn').click(function() {
+										var s = $(this);
+										$('#extra').slideToggle('fast', function(){
+											s.html(s.text() == 'Follow' ? 'Unfollow' : 'Follow');
+											 $(this).css('background-color', '#FF2125'); // green color
+										});
+										return false;
+									});
+									
+									$(".follow-btn").click(function () {
+									   $(this).toggleClass("red");
+									});
+											
+									<!--following n unfollowing	-->	
+											
+								   $('.unfollow-btn').click(function() {
+										var s = $(this);
+										$('#unextra').slideToggle('fast', function(){
+											s.html(s.text() == 'Following' ? 'Unfollowing' : 'Following');
+											 $(this).css('background-color', '#FFF'); // green color
+										});
+										return false;
+									});
+									
+									$(".unfollow-btn").click(function () {
+									   $(this).toggleClass("white");
+									});							
+									
+                                </script>
+                               
+         <!--toggle follow n color change-->
+         
+          <!--Drop down menu-->
+         
+        							 <script>
+                                        			/* When the user clicks on the button, 
+													toggle between hiding and showing the dropdown content */
+													function myFunction() {
+														document.getElementById("myDropdown").classList.toggle("show");
+													}
+													
+													// Close the dropdown menu if the user clicks outside of it
+													window.onclick = function(event) {
+													  if (!event.target.matches('.dropbtn')) {
+													
+														var dropdowns = document.getElementsByClassName("drop-list");
+														var i;
+														for (i = 0; i < dropdowns.length; i++) {
+														  var openDropdown = dropdowns[i];
+														  if (openDropdown.classList.contains('show')) {
+															openDropdown.classList.remove('show');
+														  }
+														}
+													  }
+													}
+                                        
+                                        
+                                        </script>
+         <!--Drop down menu-->
 
                      </div>
                    </body>

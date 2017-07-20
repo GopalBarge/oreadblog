@@ -42,7 +42,7 @@ if(empty($parts[2])){
     
     if(isset($_SESSION['is_logged'])){
 
-      if($_SESSION['registration_status'] == 0 ){
+      if(!isset($_SESSION['registration_status']) || $_SESSION['registration_status'] == 0 ){
         
         if(empty($parts[3]) || ($parts[3] != 'follow_step')){
          header('Location: ' . ROOT_REL_PATH.'user/follow_step' );  

@@ -117,6 +117,30 @@
          <p id="comment">
           <?=$oComment->comment_content?>
         </p>
+        <p style="display:none;" id="<?=$oComment->comment_ID?>_reply">
+           <input id="<?=$oComment->comment_ID?>_comment-box" type="text"  name="comment" placeholder="Add a comment" />
+       <?php if(isset($_SESSION['is_logged'])){?>
+       <input class="post-comment"  name="add_comment" type="button"  onclick="replyComment(<?=($this->oPost->ID)?>,<?=$oComment->comment_ID?>);" value="Reply" />
+       <?php } else { ?>
+       <input class="post-comment" id="post-comment" name="add_comment" type="button"  onclick="$('#myBtn').click();" value="Reply" />
+       <?php }  ?>
+          </p>
+          <div id="<?=$oComment->comment_ID?>_comment">
+          <?php if(sizeof($oComment->subComments)) {?>
+          <ul class="comments" id="<?=$oComment->comment_ID?>_comments-ul">
+          <?php foreach ($oComment->subComments as $oSubComment): ?>
+        <li>
+       <a href="#" id="comment-user-img"><img src="<?=ROOT_REL_PATH?>static/oread_files/scarllet.jpg" />
+         <p id="comment-user"><?=$oSubComment->user_name?><span id="comment-time"><?=$oSubComment->comment_elapsed_time?></span></p></a>
+         <p id="comment">
+          <?=$oSubComment->comment_content?>
+        </p>
+        </li>
+          <?php endforeach ?> 
+          </ul>
+          <?php } ?>
+          </div>
+        <p><a onclick="enableReply(<?=$oComment->comment_ID?>)" class="post-comment">Reply</a> </p>
 
       </li>
     <?php endforeach ?> 
@@ -130,6 +154,32 @@
 <!--Drop down menu-->
 
 <script>
+function enableReply(id){  
+  $("#"+id+"_reply").css("display","block");
+  $("#"+id+"_reply").find('input:first').focus();
+}
+
+function replyComment(postId,parentCommentId){
+
+ $.ajax({
+      url: '',
+      type: 'post',
+      data: {'add_comment': 'Reply', 'postId': postId, 'parentCommentId': parentCommentId, 'comment':$("#"+parentCommentId+"_comment-box").val()},
+      datatype: 'html',
+      success: function(rsp){
+      console.log("resonse:"+$("#"+parentCommentId+"_comments-ul").length);
+      var ul = $("#"+parentCommentId+"_comments-ul");
+      if(ul.length == 0){
+         ul = $("#"+parentCommentId+"_comment").append('<ul class="comments" id="'+parentCommentId+'_comments-ul"></ul>').find('ul');;
+
+      }
+       var commLi = '<li><a href="#" id="comment-user-img"><img src="<?=ROOT_REL_PATH?>static/oread_files/scarllet.jpg" /><p id="comment-user"><?=$_SESSION['fullname']?><span id="comment-time">Posted few seconds ago</span></p></a><p id="comment">'+$("#"+parentCommentId+"_comment-box").val()+'</p></li>';
+       ul.prepend(commLi);
+       $("#"+parentCommentId+"_comment-box").val('');
+       $("#"+parentCommentId+"_reply").css("display","none");
+     }
+   });
+}
   function addComment(postId){
     $.ajax({
       url: '',
@@ -137,6 +187,7 @@
       data: {'add_comment': 'Add', 'postId': postId, 'comment':$("#comment-box").val()},
       datatype: 'html',
       success: function(rsp){
+      console.log("resonse:"+rsp);
        var commLi = '<li><a href="#" id="comment-user-img"><img src="<?=ROOT_REL_PATH?>static/oread_files/scarllet.jpg" /><p id="comment-user"><?=$_SESSION['fullname']?><span id="comment-time">Posted few seconds ago</span></p></a><p id="comment">'+$("#comment-box").val()+'</p></li>';
        $("#comments-ul").prepend(commLi);
        $("#comment-box").val('');

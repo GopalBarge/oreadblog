@@ -40,7 +40,7 @@ public function follow_step()
             $_SESSION['registration_status'] = 1; 
             header('Location: ' . ROOT_REL_PATH.'home' );
         }else{
-  if(!isset($_SESSION['id']) ||  (isset($_SESSION['id']) && $_SESSION['registration_status'] == 1)){
+  if(!isset($_SESSION['id']) ||  (isset($_SESSION['id']) && isset($_SESSION['registration_status']) && $_SESSION['registration_status'] == 1)){
 header('Location: ' . ROOT_REL_PATH);
   }
   $this->oUtil->categories = $this->oModel->getAllCategories();
@@ -88,7 +88,8 @@ $this->username = $this->create_permalink($_POST['name']);
     }
 
     public function login()
-    {       
+    {    
+          
         //if ($this->isLogged())
          //   header('Location: ' . ROOT_REL_PATH .'home');
 

@@ -61,16 +61,17 @@ public function post()
     if(isset($_POST['add_comment']))
     {
 
-     $cData = array('comment_post_ID' => $_POST['postId'], 'comment_content' =>$_POST['comment'], 'user_id' => $_SESSION['id']);
+     $cData = array('comment_parent' => !isset($_POST['parentCommentId'])  ? 0 : $_POST['parentCommentId'], 'comment_post_ID' => $_POST['postId'], 'comment_content' =>$_POST['comment'], 'user_id' => $_SESSION['id']);
 
      $id = $this->oModel->add_comment($cData);
 
      $this->oModel->updatePostCommentCount($_POST['postId']); 
      $this->oUtil->oId = $id;
-     return $id;
+     echo $id;
 
  }else{
-
+  $nodeComments = array();
+  
     $userId = null;
     if(isset($_SESSION['id'])){
         $userId = $_SESSION['id'];
@@ -80,10 +81,17 @@ public function post()
         $this->oUtil->oComments = $this->oModel->getPostComments($this->oUtil->oPost->ID); // Get the 
 
         foreach ($this->oUtil->oComments as $key => $value) {
-
-            $value->comment_elapsed_time = $this->get_timeago(strtotime($value->comment_date));
+                        $value->comment_elapsed_time = $this->get_timeago(strtotime($value->comment_date));
+            $value->subComments = array();
+            if($value->comment_parent == 0){
+            $nodeComments[$value->comment_ID] = $value;
+            }else{
+               
+                $nodeComments[$value->comment_parent]->subComments[] = $value;
+            }
         }
-
+        krsort($nodeComments);
+        $this->oUtil->oComments = $nodeComments;
         $this->oUtil->getView('post'); 
     }
 }

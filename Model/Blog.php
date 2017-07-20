@@ -120,14 +120,14 @@ class Blog
  public function add_comment(array $cData)
  {
 
-     $oStmt = $this->oDb->prepare('INSERT INTO oread_comments (comment_post_ID, comment_content, user_id) VALUES(:comment_post_ID, :comment_content, :user_id)');
+     $oStmt = $this->oDb->prepare('INSERT INTO oread_comments (comment_post_ID, comment_content,comment_parent, user_id) VALUES(:comment_post_ID, :comment_content, :comment_parent, :user_id)');
      $oStmt->execute($cData);        
      return $this->oDb->lastInsertId();
  }
 
  public function getPostComments($id)
  {
-    $oStmt = $this->oDb->prepare('SELECT user.display_name as user_name,  user.user_login as user_login, comment.* FROM oread_comments comment INNER JOIN oread_users as user on comment.user_id = user.id WHERE comment_post_ID = :post_id  ORDER BY comment_date DESC LIMIT 10');
+    $oStmt = $this->oDb->prepare('SELECT user.display_name as user_name,  user.user_login as user_login, comment.* FROM oread_comments comment INNER JOIN oread_users as user on comment.user_id = user.id WHERE comment_post_ID = :post_id  ORDER BY comment_date ASC ');
     $oStmt->bindParam(':post_id', $id, \PDO::PARAM_INT);
     $oStmt->execute();
     return $oStmt->fetchAll(\PDO::FETCH_OBJ);
@@ -205,6 +205,25 @@ public function updatePostLikeCount($postId){
     $oStmt = $this->oDb->query($sql);
     return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
+
+ public function getUserFollowers($userId)
+    {
+        $sql = "select user.display_name as name, user.user_login, user.id,
+        (SELECT COUNT(distinct id) FROM `oread_posts` WHERE post_author = user.ID) topics,
+        (SELECT COUNT(distinct post_id)  from oread_user_likes where user_id = user.ID) following,
+        (SELECT COUNT(distinct user_id)  from oread_user_likes where post_id in (SELECT id as topics FROM `oread_posts` WHERE post_author = user.ID)) followers from oread_users as user where ID =   $userId LIMIT 1";
+    $oStmt = $this->oDb->query($sql);
+    return $oStmt->fetch(\PDO::FETCH_OBJ);
+    }
+
+    public function getUserFollowing($userId)
+    {
+        $sql = "select user.display_name as name, user.user_login, user.id,
+        (SELECT distinct user_id,  from oread_user_likes where post_id in (SELECT id as topics FROM `oread_posts` WHERE post_author = user.ID)) followers from oread_users as user where ID =   $userId LIMIT 1";
+    $oStmt = $this->oDb->query($sql);
+    return $oStmt->fetch(\PDO::FETCH_OBJ);
+    }
+
     public function getUserProfileDataByUserName($userName)
     {
         $sql = "select user.display_name as name, user.user_login, user.id,
