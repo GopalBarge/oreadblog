@@ -206,22 +206,18 @@ public function updatePostLikeCount($postId){
     return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
 
- public function getUserFollowers($userId)
+ public function getFollowings($userId)
     {
-        $sql = "select user.display_name as name, user.user_login, user.id,
-        (SELECT COUNT(distinct id) FROM `oread_posts` WHERE post_author = user.ID) topics,
-        (SELECT COUNT(distinct post_id)  from oread_user_likes where user_id = user.ID) following,
-        (SELECT COUNT(distinct user_id)  from oread_user_likes where post_id in (SELECT id as topics FROM `oread_posts` WHERE post_author = user.ID)) followers from oread_users as user where ID =   $userId LIMIT 1";
+        $sql = "select user.display_name as name, user.user_login, user.id from oread_users user where id in (select follow_id from oread_follow where user_id  =   $userId)";
     $oStmt = $this->oDb->query($sql);
-    return $oStmt->fetch(\PDO::FETCH_OBJ);
+    return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getUserFollowing($userId)
+    public function getFollows($userId)
     {
-        $sql = "select user.display_name as name, user.user_login, user.id,
-        (SELECT distinct user_id,  from oread_user_likes where post_id in (SELECT id as topics FROM `oread_posts` WHERE post_author = user.ID)) followers from oread_users as user where ID =   $userId LIMIT 1";
-    $oStmt = $this->oDb->query($sql);
-    return $oStmt->fetch(\PDO::FETCH_OBJ);
+        $sql = "select user.display_name as name, user.user_login, user.id from oread_users user where id in (select user_id from oread_follow where follow_id = $userId)";
+        $oStmt = $this->oDb->query($sql);
+    return $oStmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
     public function getUserProfileDataByUserName($userName)
@@ -233,4 +229,31 @@ public function updatePostLikeCount($postId){
     $oStmt = $this->oDb->query($sql);
     return $oStmt->fetch(\PDO::FETCH_OBJ);
     }
+
+    public function setFollow($userId, $follow_user_id)
+    {
+        $sql = "INSERT INTO oread_follow (user_id, follow_id) VALUES (:user_id, :follow_id)";
+     $oStmt = $this->oDb->prepare($sql);
+     $oStmt->bindParam(':user_id', $userId, \PDO::PARAM_INT);
+     $oStmt->bindParam(':follow_id', $follow_user_id, \PDO::PARAM_INT);
+     $oStmt->execute(); 
+    }
+
+    public function isFollow($userId, $follow_user_id)
+    {     
+     $oStmt = $this->oDb->prepare('SELECT 1 FROM oread_follow WHERE user_id = :user_id and follow_id = :follow_id LIMIT 1');
+        $oStmt->bindParam(':user_id', $userId, \PDO::PARAM_INT);
+     $oStmt->bindParam(':follow_id', $follow_user_id, \PDO::PARAM_INT);
+        $oStmt->execute();
+        $oRow = $oStmt->fetch(\PDO::FETCH_OBJ);      
+        return $oRow?1:0;
+    }
+
+     public function removeFollow($userId, $follow_user_id){
+     $sql = "DELETE FROM oread_follow WHERE user_id = :user_id and follow_id = :follow_id LIMIT 1";
+     $oStmt = $this->oDb->prepare($sql);     
+     $oStmt->bindParam(':user_id', $userId, \PDO::PARAM_INT);
+     $oStmt->bindParam(':follow_id', $follow_user_id, \PDO::PARAM_INT);
+     return $oStmt->execute();
+ }
 }

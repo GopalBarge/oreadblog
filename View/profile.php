@@ -22,6 +22,22 @@
     <script type="text/javascript" src="<?=ROOT_URL?>static/oread_files/jquery-3.1.1.js"></script>   
 <script type="text/javascript" src="<?=ROOT_URL?>static/js/oread-post.js"></script> 
 
+<script type="text/javascript" >
+	function followUser(userId){
+
+var urlFollow =  <?=ROOT_REL_PATH?> + 'profile/follow';
+alert(urlFollow);
+$.ajax({
+      url: urlFollow,
+      type: 'post',
+      data: { 'follow_user_id': userId},
+      datatype: 'html',
+      success: function(rsp){
+      console.log(rsp);
+     }
+   });
+}
+</script>
 
   </head>
 
@@ -43,6 +59,18 @@
         <a href="settings.html"><i class="fa fa-cog" aria-hidden="true"></i></a>
         <a href="<?=ROOT_REL_PATH?>user/logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
       </div>
+<?php } else {?>
+<!-- <button onclick="followUser($this->oProfileData->id);" >Follow</button> -->
+<br><br><br>
+<?php 
+$isFollow = false;
+foreach ($this->oFollows as $key => $value) {
+	if($value->id == $_SESSION['id']){
+		$isFollow = true;
+	}
+} ?>
+<a href="#"  class="follow-btn-link"><div class="follow-btn <?=$isFollow?"red":""?>" onclick="followUser(<?=$this->oProfileData->id?>)"><?=$isFollow?"UnFollow":"Follow"?></div></a>
+
 <?php } ?>
        
 
@@ -51,19 +79,15 @@
        <img id="uploadimage" src="<?=ROOT_URL?>static/oread_files/scarllet.jpg" />
        <h2><?=$this->oProfileData->name?></h2>
        <p>@<?=$this->oProfileData->user_login?></p>
-
-       <ul class="tab">
+				 
+			
+			<ul class="tab">
         <li><a href='#post'><span><?=$this->oProfileData->topics?></span>Topics</a></li>
-        <li><a href='#followers' ><span><?=$this->oProfileData->followers?></span>Followers</a></li>
-        <li><a href='#following' ><span><?=$this->oProfileData->following?></span>Following</a></li>
+        <li><a href='#followers' ><span><?=count($this->oFollows)?></span>Followers</a></li>
+        <li><a href='#following' ><span><?=count($this->oFollowings)?></span>Following</a></li>
       </ul> 
 
     </div>
-
-
-
-
-
   </div>
 
 
@@ -81,61 +105,47 @@
     <div id="followers" class="tabcontent">
 							
                             <ul id="follower-container">
-                            	
-                                <li>
-                                	  <div class="follower-info">
-                                      
-                                      	<a href="#" class="follower-img"><img src="oread_files/tom.jpg" class="avatar"/></a>
-                               			<a href="#" id="follower"><p>Tom Cruise <span id="post-time">@tom_cruise01</span></p></a>
+															
+															<?php 
+
+foreach ($this->oFollows as $key => $value) {
+	?>
+	 <li>
+                                	  <div class="follower-info"> 
+                                      	<a href="#" class="follower-img"><img src="<?=ROOT_URL?>static/oread_files/scarllet.jpg" class="avatar"/></a>
+                               			<a href="<?=ROOT_REL_PATH?>user/<?=$value->user_login;?>" id="follower"><p><?=$value->name?> <span id="post-time">@<?=$value->user_login?></span></p></a>
                                      </div>
                                       
                                       
-                                      <a href="#" class="follow-btn-link"><div class="follow-btn">Follow</div></a>
+                                      <a href="#" class="follow-btn-link"><div class="follow-btn" onclick="followUser(<?=$value->id?>)">Follow</div></a>
                                     <div id="extra"></div>
                                 	
                                 </li>
-                                <li>
-                                	  <div class="follower-info">
-                                      
-                                      	<a href="#" class="follower-img"><img src="oread_files/robert01.jpg" class="avatar"/></a>
-                               			<a href="#" id="follower"><p>Robert Downey Jr. <span id="post-time">@robert_downey</span></p></a>
-                                     </div>
-                                      
-                                      
-                                      <a href="#" class="follow-btn-link"><div class="follow-btn">Follow</div></a>
-                                    <div id="extra"></div>
-                                	
-                                </li>
+<?php 	
+} ?>
+
+                                
                                 
    <!--follower container--></ul>
               </div>
               <div id="following" class="tabcontent">
 							 <ul id="follower-container">
-                             
-                             <li>
-                                	  <div class="follower-info">
-                                      
-                                      	<a href="#" class="follower-img"><img src="oread_files/downey.jpg" class="avatar"/></a>
-                               			<a href="#" id="follower"><p>Robert Downey Jr. <span id="post-time">@robert_downey</span></p></a>
+                   <?php  foreach ($this->oFollowings as $key => $value) {
+	?>
+	 <li>
+                                	  <div class="follower-info"> 
+                                      	<a href="#" class="follower-img"><img src="<?=ROOT_URL?>static/oread_files/scarllet.jpg" class="avatar"/></a>
+                               			<a href="<?=ROOT_REL_PATH?>user/<?=$value->user_login;?>" id="follower"><p><?=$value->name?> <span id="post-time">@<?=$value->user_login?></span></p></a>
                                      </div>
                                       
                                       
-                                      <a href="#" class="follow-btn-link"><div class="unfollow-btn">Unfollowing</div></a>
-                                    <div id="unextra"></div>
+                                      <a href="#" class="follow-btn-link"><div class="unfollow-btn" onclick="followUser(<?=$value->id?>)">Unfollowing</div></a>
+                                    <div id="extra"></div>
                                 	
                                 </li>
-                                <li>
-                                	  <div class="follower-info">
-                                      
-                                      	<a href="#" class="follower-img"><img src="oread_files/tom.jpg" class="avatar"/></a>
-                               			<a href="#" id="follower"><p>Tom Cruise <span id="post-time">@tom_cruise01</span></p></a>
-                                     </div>
-                                      
-                                      
-                                      <a href="#" class="follow-btn-link"><div class="unfollow-btn">Unfollowing</div></a>
-                                    <div id="unextra"></div>
-                                	
-                                </li>
+<?php 	
+} ?>        
+                           
                                 
                                 
    <!--following container--></ul>
@@ -208,6 +218,9 @@
         
 </script>
 <script>
+
+
+
                                 	$('.follow-btn').click(function() {
 										var s = $(this);
 										$('#extra').slideToggle('fast', function(){

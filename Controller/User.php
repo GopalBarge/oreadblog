@@ -13,6 +13,9 @@ public function index()
   
         $this->oUtil->oProfileData = $this->oModel->getUserProfileDataByUserName($this->username);
          if($this->oUtil->oProfileData){
+             $this->oUtil->oFollows = $this->oModel->getFollows($this->oUtil->oProfileData->id);
+         $this->oUtil->oFollowings = $this->oModel->getFollowings($this->oUtil->oProfileData->id);
+        
          $this->oUtil->oPosts = $this->oModel->getUsersPost($this->oUtil->oProfileData->id);
          foreach ($this->oUtil->oPosts as $key => $value) {
            
